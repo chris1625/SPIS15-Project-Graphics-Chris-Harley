@@ -7,18 +7,33 @@ harley=Image.open('greenscreen_harley.jpg')
 (harleyWidth,harleyHeight)=harley.size
 
 def removeGreen():
-    newChris=Image.new('RGB',(chrisWidth,chrisHeight))
-    for x in range(chrisWidth):
-        for y in range (chrisHeight):
-            (red,green,blue)=chris.getpixel((x,y))
-            if 130<red<200 and 140<green<220 and 60<blue<120:
+    (Gred,Ggreen,Gblue)=chris.getpixel((1,1))
+    newHarley=Image.new('RGB',(harleyWidth,harleyHeight))
+    for x in range(harleyWidth):
+        for y in range (harleyHeight):
+            (red,green,blue)=harley.getpixel((x,y))
+            total=float(red+green+blue)
+#            if 200<=red<= and 0.39<=float(green/total)<=0.44 and 0.18<=float(blue/total)<=0.22:
+            if 200<=red<=255 and 215<=green<=255 and 110<=blue<=167:
                 red,green,blue=255,255,255
-            newChris.putpixel((x,y),(red,green,blue))
-    newChris.show()
+            newHarley.putpixel((x,y),(red,green,blue))
+    newHarley.show()
 
 def showPixel(startx,starty,endx,endy):
+    minRed=255
+    maxRed=0
+    minGreen=255
+    maxGreen=0
+    minBlue=255
+    maxBlue=0
     for x in range(startx,endx):
         for y in range(starty, endy):
-            print chris.getpixel((x,y))
-            
+            (red,green,blue)=harley.getpixel((x,y))
+            minRed=min(minRed,red)
+            maxRed=max(maxRed,red)
+            minGreen=min(minGreen,green)
+            maxGreen=max(maxGreen,green)
+            minBlue=min(minBlue,blue)
+            maxBlue=max(maxBlue,blue)
+    print minRed,maxRed,minGreen,maxGreen,minBlue,maxBlue
             
