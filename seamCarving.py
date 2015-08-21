@@ -19,8 +19,8 @@ def greyscale():
 def energyLevel():
     '''Makes a table of the energy levels'''
     table = [[0 for y in range(height-1)] for x in range(width-1)] 
-    for x in range (100):
-        for y in range (100):
+    for x in range (width-1):
+        for y in range (height-1):
             energy = 0
             color = image.getpixel((x,y))[1] 
             #if x > 0: 
@@ -34,5 +34,4 @@ def energyLevel():
 
             if y < width:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
-            table[x][y] = energy 
-    print table 
+            table[x][y] = energy
