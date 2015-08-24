@@ -3,6 +3,8 @@ from PIL import Image,ImageDraw
 
 def greyscale(image):
     '''Convert image to greyscale'''
+    image=Image.open(image)
+    (width,height)=image.size
     for x in range( 0, width ):
         for y in range( 0, height ):
             (red, green, blue) = image.getpixel((x, y))
@@ -12,14 +14,15 @@ def greyscale(image):
             newGreen = int(.21*red+.72*green+.07*blue)
             newBlue = int(.21*red+.72*green+.07*blue)
             image.putpixel((x, y), (newRed, newGreen, newBlue))
-    image.save('greyscale.jpg')
+    image.save('greyscale1.jpg')
 
 def energyLevel(image,widthchange):
     image=Image.open(image)
     (width,height)=image.size
     endLocation = 0
     endY = height - 1
-    #Important to be used later to determine coordinates of final position 
+    #Important to be used later to determine coordinates of final position
+    minimum = 9999999 # Also important for later 
     '''Makes a table of the energy levels'''
     table = [[0 for y in range(height)] for x in range(width)]
     pathwaytable = [[0 for y in range(height)] for x in range(width)]
@@ -68,18 +71,23 @@ def energyLevel(image,widthchange):
                     else:
                          pathwaytable[b][a+1] = [b, a]
                 
-    for c in range (width - 2):
-        minimum = min(table[c][height - 1],table[c+1][height - 1])
-        if min(table[c][height-1],table[c+1][height - 1]) == minimum:
-             endLocation = c
-
-    while endY != 0: 
-        image.putpixel((endLocation,endY),(255,0,0))
-        print pathwaytable[endLocation][endY]
-        print endLocation
-        print endY 
-        endLocation,endY = (pathwaytable[endLocation][endY][0],pathwaytable[endLocation][endY][1]) 
-    
+   # for c in range (width - 2):
+       # minimum = min(table[c][height - 1],table[c+1][height - 1])
+       # if min(table[c][height-1],table[c+1][height - 1]) == minimum:
+           #  endLocation = c
+    for u in range (widthchange):
+        for c in range (width - 2):
+            minimum = min(minimum,table[c][height - 1],table[c+1][height - 1])
+            if table[c][height-1] == minimum:
+                 endLocation = c
+            elif table[c+1][height-1] == minimum:
+                endLocation = c+1 
+        table[endLocation][height-1] = 999999999
+        minimum = 99999999
+        while endY != 0: 
+            image.putpixel((endLocation,endY),(255,0,0))
+            endLocation,endY = (pathwaytable[endLocation][endY][0],pathwaytable[endLocation][endY][1]) 
+        endY = height - 1
     image.show()
     return minimum 
     print minimum 
