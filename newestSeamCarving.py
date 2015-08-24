@@ -36,22 +36,21 @@ def energyLevel(image):
             if y < width:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
+    
 
     for a in range (height- 1):
         for b in range (width - 1):
             if a != height - 1:
                 if b != 0 and b!= width - 2:
-                    table[b][a-1] = table[b][a-1] + min(table[b-1][a],table[b][a],table[b+1][a])
+                    table[b][a+1] = table[b][a+1] + min(table[b-1][a],table[b][a],table[b+1][a])
                 elif b == 0:
-                    table[b][a-1] = table[b][a-1] + min(table[b][a],table[b+1][a])
+                    table[b][+1] = table[b][a+1] + min(table[b][a],table[b+1][a])
                 else:
-                    table[b][a-1] = table[b][a-1] + min(table[b-1][a],table[b][a])
+                    table[b][a+1] = table[b][a+1] + min(table[b-1][a],table[b][a])
         
 
     for c in range (width - 2):
-        minimum = min(table[c][height - 2],table[c+1][height - 2])
+        minimum = min(table[c][height - 1],table[c+1][height - 1])
         
     return minimum 
     print minimum 
-
-    
