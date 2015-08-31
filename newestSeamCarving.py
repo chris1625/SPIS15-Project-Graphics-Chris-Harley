@@ -76,9 +76,8 @@ def energyLevel(image,widthchange):
        # minimum = min(table[c][height - 1],table[c+1][height - 1])
        # if min(table[c][height-1],table[c+1][height - 1]) == minimum:
            #  endLocation = c
-    for u in range (widthchange):
-        
-        for c in range (width - 2):
+    for u in range (widthchange+1):
+        for c in range (width - 1):
             minimum = min(minimum,table[c][height - 1],table[c+1][height - 1])
             if table[c][height-1] == minimum:
                  endLocation = c
@@ -88,6 +87,40 @@ def energyLevel(image,widthchange):
         minimum = 99999999
         while endY != 0:
             image.putpixel((endLocation,endY),(255,0,0))
+            red,blue,green = image.getpixel((pathwaytable[endLocation][endY][0],endY-1))
+            minLocation = endLocation
+            for foo in range (width-1):
+                #print foo, endLocation + foo,endLocation - foo
+                if minLocation == width - 1 and endY > 0:
+                    if image.getpixel((minLocation-1,endY-1)) != (255,0,0) or image.getpixel((minLocation,endY-1)) != (255,0,0):
+                        break
+                    if image.getpixel((minLocation-1,endY-1)) == (255,0,0) and image.getpixel((minLocation,endY-1)) == (255,0,0):
+                        minLocation = endLocation - foo
+                                
+                    
+                elif endLocation == 0 and endY > 0:
+                    if image.getpixel((minLocation,endY-1)) != (255,0,0) or image.getpixel((minLocation+1,endY-1)) != (255,0,0):
+                        break
+                    if  image.getpixel((minLocation,endY-1)) == (255,0,0) and image.getpixel((minLocation+1,endY-1)) == (255,0,0):
+                        minLocation = endLocation+foo
+                                
+                   
+                elif endY > 0:
+                      if image.getpixel((minLocation-1,endY-1)) != (255,0,0) or image.getpixel((minLocation,endY-1)) != (255,0,0) or image.getpixel((minLocation+1,endY-1)) != (255,0,0):
+                        break
+                      if image.getpixel((minLocation-1,endY-1)) == (255,0,0) and image.getpixel((minLocation,endY-1)) == (255,0,0) and image.getpixel((minLocation+1,endY-1)) == (255,0,0):
+                            if endLocation - foo < 0:
+                                minLocation = foo + endLocation
+                            elif endLocation + foo > width - 1:
+                                minLocation = endLocation - foo
+                            elif min(table[endLocation+foo][endY-1],table[endLocation-foo][endY-1]) == table[endLocation-foo-1][endY-1]:
+                                minLocation = endLocation - foo
+                            else:
+                                minLocation = endLocation + foo
+                       
+            
+            endLocation = minLocation
+           
             red,blue,green = image.getpixel((pathwaytable[endLocation][endY][0],endY-1))
             if red == 255 and blue == 0 and green == 0:
                 if endLocation - (pathwaytable[endLocation][endY][0]) == 0:
@@ -120,6 +153,6 @@ def energyLevel(image,widthchange):
                 endLocation,endY = (pathwaytable[endLocation][endY][0],endY-1)
             
         endY = height - 1
-    image.save('failedtest1.bmp')
+    image.save('pls.bmp')
     image.show() 
      
