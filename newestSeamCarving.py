@@ -22,6 +22,7 @@ def energyLevel(image,widthchange):
     endLocation = 0
     endY = height - 1
     print height
+    print width
     #Important to be used later to determine coordinates of final position
     minimum = 9999999 # Also important for later 
     '''Makes a table of the energy levels'''
@@ -44,12 +45,11 @@ def energyLevel(image,widthchange):
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
     
-
     for a in range (height- 1):
-        for b in range (width - 1):
+        for b in range (width):
             john = table [b][a+1]
             if a != height - 1:
-                if b != 0 and b!= width - 2:
+                if b != 0 and b!= width - 1:
                     table[b][a+1] = table[b][a+1] + min(table[b-1][a],table[b][a],table[b+1][a])
                     
                     if table[b][a+1] - john == table[b-1][a]:
@@ -71,12 +71,13 @@ def energyLevel(image,widthchange):
                          pathwaytable[b][a+1] = [b - 1, a]
                     else:
                          pathwaytable[b][a+1] = [b, a]
-                
+    
    # for c in range (width - 2):
        # minimum = min(table[c][height - 1],table[c+1][height - 1])
        # if min(table[c][height-1],table[c+1][height - 1]) == minimum:
            #  endLocation = c
     for u in range (widthchange):
+        
         for c in range (width - 2):
             minimum = min(minimum,table[c][height - 1],table[c+1][height - 1])
             if table[c][height-1] == minimum:
@@ -86,40 +87,39 @@ def energyLevel(image,widthchange):
         table[endLocation][height-1] = 999999999
         minimum = 99999999
         while endY != 0:
-           
             image.putpixel((endLocation,endY),(255,0,0))
-            red,blue,green = image.getpixel((endLocation,endY))
-            if red == 255 and blue == 0 and green == 0: 
-                if endLocation - pathwaytable[endLocation][endY][0] == 0:
+            red,blue,green = image.getpixel((pathwaytable[endLocation][endY][0],endY-1))
+            if red == 255 and blue == 0 and green == 0:
+                if endLocation - (pathwaytable[endLocation][endY][0]) == 0:
                     if endLocation == 0:
-                        endLocation,endY = endLocation+1,pathwaytable[endLocation][endY][1]
+                        endLocation,endY = endLocation+1,endY-1
                     elif endLocation == width - 1:
-                         endLocation,endY = endLocation-1,pathwaytable[endLocation][endY][1]
+                         endLocation,endY = endLocation-1,endY-1
                     else:
-                        if min(table[endLocation-1][endY-1],table[endLocation+1][endY-1]) == table[endLocation-1][endY-1]:
-                             endLocation,endY = (endLocation - 1,pathwaytable[endLocation][endY][1])
+                        if min(table[endLocation-1][endY-1],table[endLocation+1][endY-1]) == table[endLocation-1][endY-1] and image.getpixel((endLocation-1,endY-1)) != (255,0,0):
+                             endLocation,endY = (endLocation - 1,endY-1)
                         else:
-                            endLocation,endY = (endLocation + 1,pathwaytable[endLocation][endY][1])
-                elif endLocation - pathwaytable[endLocation][endY][0] == 1:
+                            endLocation,endY = (endLocation + 1,endY-1)
+                elif endLocation - (pathwaytable[endLocation][endY][0]) == 1:
                     if endLocation == width - 1:
-                        endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                        endLocation,endY = endLocation,endY-1
                     else:
-                        if min(table[endLocation][endY-1],table[endLocation+1][endY-1]) == table[endLocation][endY-1]:
-                            endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                        if min(table[endLocation][endY-1],table[endLocation+1][endY-1]) == table[endLocation][endY-1] and image.getpixel((endLocation-1,endY-1)) != (255,0,0):
+                            endLocation,endY = endLocation,endY-1
                         else:
-                            endLocation,endY = endLocation - 1,pathwaytable[endLocation][endY][1]
+                            endLocation,endY = endLocation - 1,endY-1
                 else:
                     if endLocation == 0:
-                         endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                         endLocation,endY = endLocation,endY-1
                     else:
-                        if min(table[endLocation][endY-1],table[endLocation-1][endY-1]) == table[endLocation][endY-1]:
-                            endLocation,endY = (endLocation,pathwaytable[endLocation][endY][1])
+                        if min(table[endLocation][endY-1],table[endLocation-1][endY-1]) == table[endLocation][endY-1] and image.getpixel((endLocation,endY-1)) != (255,0,0):
+                            endLocation,endY = (endLocation,endY-1)
                         else:
-                            endLocation,endY = (endLocation-1,pathwaytable[endLocation][endY][1])
+                            endLocation,endY = (endLocation-1,endY-1)
             else:
-                endLocation,endY = (pathwaytable[endLocation][endY][0],pathwaytable[endLocation][endY][1])
-             
+                endLocation,endY = (pathwaytable[endLocation][endY][0],endY-1)
+            
         endY = height - 1
-    image.show()
-    return minimum 
-    print minimum 
+    image.save('failedtest1.bmp')
+    image.show() 
+     
