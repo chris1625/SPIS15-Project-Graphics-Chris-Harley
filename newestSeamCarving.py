@@ -21,6 +21,7 @@ def energyLevel(image,widthchange):
     (width,height)=image.size
     endLocation = 0
     endY = height - 1
+    print height
     #Important to be used later to determine coordinates of final position
     minimum = 9999999 # Also important for later 
     '''Makes a table of the energy levels'''
@@ -84,9 +85,40 @@ def energyLevel(image,widthchange):
                 endLocation = c+1 
         table[endLocation][height-1] = 999999999
         minimum = 99999999
-        while endY != 0: 
+        while endY != 0:
+           
             image.putpixel((endLocation,endY),(255,0,0))
-            endLocation,endY = (pathwaytable[endLocation][endY][0],pathwaytable[endLocation][endY][1]) 
+            red,blue,green = image.getpixel((endLocation,endY))
+            if red == 255 and blue == 0 and green == 0: 
+                if endLocation - pathwaytable[endLocation][endY][0] == 0:
+                    if endLocation == 0:
+                        endLocation,endY = endLocation+1,pathwaytable[endLocation][endY][1]
+                    elif endLocation == width - 1:
+                         endLocation,endY = endLocation-1,pathwaytable[endLocation][endY][1]
+                    else:
+                        if min(table[endLocation-1][endY-1],table[endLocation+1][endY-1]) == table[endLocation-1][endY-1]:
+                             endLocation,endY = (endLocation - 1,pathwaytable[endLocation][endY][1])
+                        else:
+                            endLocation,endY = (endLocation + 1,pathwaytable[endLocation][endY][1])
+                elif endLocation - pathwaytable[endLocation][endY][0] == 1:
+                    if endLocation == width - 1:
+                        endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                    else:
+                        if min(table[endLocation][endY-1],table[endLocation+1][endY-1]) == table[endLocation][endY-1]:
+                            endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                        else:
+                            endLocation,endY = endLocation - 1,pathwaytable[endLocation][endY][1]
+                else:
+                    if endLocation == 0:
+                         endLocation,endY = endLocation,pathwaytable[endLocation][endY][1]
+                    else:
+                        if min(table[endLocation][endY-1],table[endLocation-1][endY-1]) == table[endLocation][endY-1]:
+                            endLocation,endY = (endLocation,pathwaytable[endLocation][endY][1])
+                        else:
+                            endLocation,endY = (endLocation-1,pathwaytable[endLocation][endY][1])
+            else:
+                endLocation,endY = (pathwaytable[endLocation][endY][0],pathwaytable[endLocation][endY][1])
+             
         endY = height - 1
     image.show()
     return minimum 
