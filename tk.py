@@ -2,10 +2,7 @@ from Tkinter import *
 import tkFileDialog
 import ttk
 from PIL import Image,ImageTk
-from shrinkSeamCarvingWidth import *
-from shrinkSeamCarvingHeight import shrinkEnergyLevelHeight
-from expandSeamCarvingWidth import expandEnergyLevelWidth
-from expandSeamCarvingHeight import expandEnergyLevelHeight
+from seamCarving import *
 
 fileOnly=''
 fullPath=''
