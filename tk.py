@@ -2,6 +2,7 @@ from Tkinter import *
 import tkFileDialog
 import ttk
 from PIL import Image,ImageTk
+from SeamCarvingWidth import *
 
 fileOnly=''
 fullPath=''
@@ -22,22 +23,11 @@ def seamCarve(*args):
     height=int(inputHeight.get())
     choice=str(option.get())
     if choice=='shrink':
-        shrinkCarve(fullPath,width,height)
+        energyLevel(fullPath,width)
         return
     else:
         expandCarve(fullPath,width,height)
         return
-
-def shrinkCarve(image,width,height):
-    print 'Will shrink'
-    ## Add main code for carving and shrinking here
-    pic=Image.open(image)
-    picRoot=Toplevel()
-    picRoot.title("Output Window")
-    tkPic=ImageTk.PhotoImage(pic)
-    picture=Label(picRoot,image=tkPic)
-    picture.pack()
-    mainloop()
 
 def expandCarve(image,width,height):
     print 'Will expand'

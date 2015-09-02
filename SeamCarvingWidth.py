@@ -217,5 +217,5 @@ def energyLevel(image,widthchange):
                 if e2 < width - widthchange -1:
                     e2+=1
         
-    finalimage.save('plz.bmp')
+    finalimage.save('output.bmp')
     finalimage.show() 
