@@ -47,7 +47,7 @@ def shrinkEnergyLevelWidth(image,widthchange):
             if y < width:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
-    print 'wubbalubba'
+    #print 'wubbalubba'
     for a in range (height-1):
         for b in range (width):
             john = table [b][a+1]
@@ -74,7 +74,7 @@ def shrinkEnergyLevelWidth(image,widthchange):
                          pathwaytable[b][a+1] = [b - 1, a]
                     else:
                          pathwaytable[b][a+1] = [b, a]
-    print 'wubbadubba'
+    #print 'wubbadubba'
    # for c in range (width - 2):
        # minimum = min(table[c][height - 1],table[c+1][height - 1])
        # if min(table[c][height-1],table[c+1][height - 1]) == minimum:

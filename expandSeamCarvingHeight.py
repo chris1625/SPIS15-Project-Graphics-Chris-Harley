@@ -1,6 +1,5 @@
 from PIL import Image,ImageDraw
 
-
 def greyscale(image):
     '''Convert image to greyscale'''
     image=Image.open(image)
@@ -16,16 +15,16 @@ def greyscale(image):
             image.putpixel((x, y), (newRed, newGreen, newBlue))
     return image 
 
-def shrinkEnergyLevelHeight(image,heightchange):
+def expandEnergyLevelHeight(image,heightchange):
     image2 = Image.open(image)
     image=greyscale(image)
     endLocation = 0
     (width,height)=image.size
     endX = width - 1
-    print 'Now cutting seams by height'
+    print 'Now adding seams by height'
     print width
     print height
-    finalimage = Image.new('RGB',(width,height-heightchange),0)
+    finalimage = Image.new('RGB',(width,height+heightchange),0)
     #Important to be used later to determine coordinates of final position
     minimum = 9999999 # Also important for later 
     '''Makes a table of the energy levels'''
@@ -199,10 +198,26 @@ def shrinkEnergyLevelHeight(image,heightchange):
         r2 = 0 
         for r in range (height - 1):
             if image.getpixel((e,r)) != (255,0,0):
-                red,blue,green = image2.getpixel((e,r))
-                finalimage.putpixel((e,r2),(red,blue,green))
-                if r2 < height- heightchange - 1:
+                red,green,blue = image2.getpixel((e,r))
+                finalimage.putpixel((e,r2),(red,green,blue))
+                if r2 < height+ heightchange - 1:
                     r2+=1
+
+            else:
+                red,green,blue = image2.getpixel((e,r))
+                finalimage.putpixel((e,r2),(red,green,blue))
+                if r2< height+heightchange-1:
+                    red2,green2,blue2 = image2.getpixel((e,r+1))
+                if r2>0:
+                    red3,green3,blue3 = image2.getpixel((e,r-1))
+                if 0 < r2 < height + heightchange-1:
+                    red,blue,green= (red2+red3+red)/3, (blue2+blue3+blue)/3, (green+green2+green3)/3
+                elif r2 == 0:
+                    red,blue,green=(red+red2)/2,(blue+blue2)/2,(green+green2)/2
+                else:
+                    red,blue,green= (red+red3)/2,(blue+blue3)/2,(green+green3)/2
+                finalimage.putpixel((e,r2+1),(red,green,blue))
+                r2+=2
     image.save('seamsH.jpg')
     finalimage.save('output.bmp')
     finalimage.show() 

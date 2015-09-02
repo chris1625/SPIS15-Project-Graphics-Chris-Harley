@@ -4,6 +4,8 @@ import ttk
 from PIL import Image,ImageTk
 from shrinkSeamCarvingWidth import *
 from shrinkSeamCarvingHeight import shrinkEnergyLevelHeight
+from expandSeamCarvingWidth import expandEnergyLevelWidth
+from expandSeamCarvingHeight import expandEnergyLevelHeight
 
 fileOnly=''
 fullPath=''
@@ -27,9 +29,12 @@ def seamCarve(*args):
         shrinkEnergyLevelWidth(fullPath,width)
         shrinkEnergyLevelHeight('output.bmp',height)
         return
-    else:
-        expandCarve(fullPath,width,height)
+    elif choice=='expand':
+        expandEnergyLevelWidth(fullPath,width)
+        expandEnergyLevelHeight('output.bmp',height)
         return
+    else:
+        print 'Please choose an option!'
 
 def expandCarve(image,width,height):
     print 'Will expand'

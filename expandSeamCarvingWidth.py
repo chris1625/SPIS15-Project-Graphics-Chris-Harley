@@ -1,6 +1,5 @@
 from PIL import Image,ImageDraw
 
-
 def greyscale(image):
     '''Convert image to greyscale'''
     image=Image.open(image)
@@ -22,7 +21,7 @@ def expandEnergyLevelWidth(image,widthchange):
     endLocation = 0
     (width,height)=image.size
     endY = height - 1
-    print 'Now cutting seams by width'
+    print 'Now adding seams by width'
     print width
     print height
     finalimage = Image.new('RGB',(width + widthchange,height),0)
@@ -47,7 +46,7 @@ def expandEnergyLevelWidth(image,widthchange):
             if y < width:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
-    print 'wubbalubba'
+    #print 'wubbalubba'
     for a in range (height-1):
         for b in range (width):
             john = table [b][a+1]
@@ -74,7 +73,7 @@ def expandEnergyLevelWidth(image,widthchange):
                          pathwaytable[b][a+1] = [b - 1, a]
                     else:
                          pathwaytable[b][a+1] = [b, a]
-    print 'wubbadubba'
+   #print 'wubbadubba'
    # for c in range (width - 2):
        # minimum = min(table[c][height - 1],table[c+1][height - 1])
        # if min(table[c][height-1],table[c+1][height - 1]) == minimum:
@@ -209,8 +208,6 @@ def expandEnergyLevelWidth(image,widthchange):
     for r in range (height - 1):
         e2 = 0 
         for e in range (width - 1):
-            
-                
             if image.getpixel((e,r)) != (255,0,0):
                 red,blue,green = image2.getpixel((e,r))
                 finalimage.putpixel((e2,r),(red,blue,green))
@@ -218,18 +215,18 @@ def expandEnergyLevelWidth(image,widthchange):
                     e2+=1
             else:
                 red,blue,green = image2.getpixel((e,r))
+                finalimage.putpixel((e2,r),(red,blue,green))
                 if e2 < width + widthchange - 1:
                     red2,blue2,green2 = image2.getpixel((e+1,r))
                 if e2 > 0: 
                     red3,blue3,green3 = image2.getpixel((e-1,r))
-                finalimage.putpixel((e2,r),(red,blue,green))
                 if 0 <e2 < width + widthchange-1:
-                    red,blue,green = (red2+red3)/2,(blue2+blue3)/2,(green2+green3)/2
+                    red,blue,green = (red2+red3+red)/3,(blue2+blue3+blue)/3,(green2+green3+green)/3
                 elif e2 == 0:
-                    red,blue,green = red2,blue2,green2
+                    red,blue,green = (red2+red)/2,(blue+blue2)/2,(green+green2)/2
                 else:
-                    red,blue,green = red3,blue3,green3
-                finalimage.putpixel((e2,r),(red,blue,green))
+                    red,blue,green = (red+red3)/2,(blue+blue3)/2,(green+green3)/2
+                finalimage.putpixel((e2+1,r),(red,blue,green))
                 e2+=2
     image.save('seamsW.jpg')
     finalimage.save('output.bmp')
