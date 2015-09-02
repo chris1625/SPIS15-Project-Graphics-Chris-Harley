@@ -42,7 +42,7 @@ def shrinkCarve(image,width,height):
 def expandCarve(image,width,height):
     print 'Will expand'
     ## Add main code for carving and expanding here
-    pic=Image.open(fileOnly)
+    pic=Image.open(image)
     picRoot=Toplevel()
     picRoot.title("Output Window")
     tkPic=ImageTk.PhotoImage(pic)
