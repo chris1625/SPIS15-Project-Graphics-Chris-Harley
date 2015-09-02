@@ -4,25 +4,51 @@ import ttk
 from PIL import Image,ImageTk
 
 fileOnly=''
+fullPath=''
 
 def getFileName():
-    fileLocation=tkFileDialog.askopenfilename()
+    global fullPath
+    fullPath=tkFileDialog.askopenfilename()
     global fileOnly
     fileOnly=''
-    for i in range(len(fileLocation)-1,-1,-1):
-        if fileLocation[i]=='/' or fileLocation[i]=='//':
+    for i in range(len(fullPath)-1,-1,-1):
+        if fullPath[i]=='/' or fullPath[i]=='//':
             break
-        fileOnly=fileLocation[i]+fileOnly
+        fileOnly=fullPath[i]+fileOnly
     location.config(text=fileOnly)
 
 def seamCarve(*args):
     width=int(inputWidth.get())
     height=int(inputHeight.get())
-    print height,width
     choice=str(option.get())
-    print choice
-    # energyLevel(fileOnly,width)
-    # To be integrated later
+    if choice=='shrink':
+        shrinkCarve(fullPath,width,height)
+        return
+    else:
+        expandCarve(fullPath,width,height)
+        return
+
+def shrinkCarve(image,width,height):
+    print 'Will shrink'
+    ## Add main code for carving and shrinking here
+    pic=Image.open(image)
+    picRoot=Toplevel()
+    picRoot.title("Output Window")
+    tkPic=ImageTk.PhotoImage(pic)
+    picture=Label(picRoot,image=tkPic)
+    picture.pack()
+    mainloop()
+
+def expandCarve(image,width,height):
+    print 'Will expand'
+    ## Add main code for carving and expanding here
+    pic=Image.open(fileOnly)
+    picRoot=Toplevel()
+    picRoot.title("Output Window")
+    tkPic=ImageTk.PhotoImage(pic)
+    picture=Label(picRoot,image=tkPic)
+    picture.pack()
+    mainloop()
 
 root=Tk()
 root.title("Harley and Chris' Seam Carving")
@@ -58,7 +84,6 @@ width_entry=ttk.Entry(content,width=6,textvariable=inputWidth)
 width_entry.grid(column=2,row=7,sticky=(W))
 textlbl5=ttk.Label(content,text="This may take a while...").grid(column=1,row=8,sticky=(E))
 ttk.Button(content,text="Seam Carve It!",command=seamCarve).grid(column=2,row=8,sticky=(E))
-
 
 for child in content.winfo_children(): child.grid_configure(padx=4, pady=4)
 
