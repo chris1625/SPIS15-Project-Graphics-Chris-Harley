@@ -1,0 +1,4 @@
+*.pyc
+/output.bmp
+/seamsH.jpg
+/seamsW.jpg
