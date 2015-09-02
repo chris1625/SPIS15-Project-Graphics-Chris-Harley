@@ -2,7 +2,8 @@ from Tkinter import *
 import tkFileDialog
 import ttk
 from PIL import Image,ImageTk
-from SeamCarvingWidth import *
+from shrinkSeamCarvingWidth import *
+from shrinkSeamCarvingHeight import shrinkEnergyLevelHeight
 
 fileOnly=''
 fullPath=''
@@ -23,7 +24,8 @@ def seamCarve(*args):
     height=int(inputHeight.get())
     choice=str(option.get())
     if choice=='shrink':
-        energyLevel(fullPath,width)
+        shrinkEnergyLevelWidth(fullPath,width)
+        shrinkEnergyLevelHeight('output.bmp',height)
         return
     else:
         expandCarve(fullPath,width,height)

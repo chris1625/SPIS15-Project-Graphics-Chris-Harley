@@ -16,14 +16,15 @@ def greyscale(image):
             image.putpixel((x, y), (newRed, newGreen, newBlue))
     return image 
 
-def energyLevel(image,widthchange):
+def shrinkEnergyLevelWidth(image,widthchange):
     image2 = Image.open(image)
     image=greyscale(image)
     endLocation = 0
     (width,height)=image.size
     endY = height - 1
-    print height
+    print 'Now cutting seams by width'
     print width
+    print height
     finalimage = Image.new('RGB',(width - widthchange,height),0)
     #Important to be used later to determine coordinates of final position
     minimum = 9999999 # Also important for later 
@@ -216,6 +217,5 @@ def energyLevel(image,widthchange):
                 finalimage.putpixel((e2,r),(red,blue,green))
                 if e2 < width - widthchange -1:
                     e2+=1
-        
+    image.save('seamsW.jpg')
     finalimage.save('output.bmp')
-    finalimage.show() 

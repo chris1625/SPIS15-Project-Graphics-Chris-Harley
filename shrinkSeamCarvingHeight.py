@@ -16,12 +16,13 @@ def greyscale(image):
             image.putpixel((x, y), (newRed, newGreen, newBlue))
     return image 
 
-def energyLevel(image,heightchange):
+def shrinkEnergyLevelHeight(image,heightchange):
     image2 = Image.open(image)
     image=greyscale(image)
     endLocation = 0
     (width,height)=image.size
     endX = width - 1
+    print 'Now cutting seams by height'
     print width
     print height
     finalimage = Image.new('RGB',(width,height-heightchange),0)
@@ -202,6 +203,6 @@ def energyLevel(image,heightchange):
                 finalimage.putpixel((e,r2),(red,blue,green))
                 if r2 < height- heightchange - 1:
                     r2+=1
-    image.save('weeu.bmp')
-    finalimage.save('plz.bmp')
+    image.save('seamsH.jpg')
+    finalimage.save('output.bmp')
     finalimage.show() 
