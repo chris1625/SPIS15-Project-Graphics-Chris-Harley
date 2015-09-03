@@ -3,7 +3,6 @@ import tkFileDialog
 import ttk
 from PIL import Image,ImageTk
 from seamCarving import *
-import subprocess as sp
 
 fileOnly=''
 fullPath=''
@@ -20,7 +19,6 @@ def getFileName():
     location.config(text=fileOnly)
 
 def seamCarve(*args):
-    tmp = sp.call('clear',shell=True)
     if inputWidth.get()=='':
         width=0
     elif inputHeight.get()=='':
