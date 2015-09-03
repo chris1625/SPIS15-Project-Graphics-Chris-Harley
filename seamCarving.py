@@ -43,7 +43,7 @@ def shrinkEnergyLevelWidth(image,widthchange):
             #if y > 0:
                 #energy = energy + abs(color - image.getpixel((x,y-1))[1])
 
-            if y < width:
+            if y < height:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
     #print 'wubbalubba'
@@ -241,14 +241,14 @@ def shrinkEnergyLevelHeight(image,heightchange):
             #if x > 0: 
                 #energy = energy + abs(color - image.getpixel((x-1,y))[1])
                 
-            if x < height:
-                energy = energy + abs(color - image.getpixel((x,y+1))[1])
+            if x < width:
+                energy = energy + abs(color - image.getpixel((x+1,y))[1])
 
             #if y > 0:
                 #energy = energy + abs(color - image.getpixel((x,y-1))[1])
 
             if y < height:
-                 energy = energy + abs(color - image.getpixel((x+1,y))[1])
+                 energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
     #print 'wubbalubba'
     for a in range (height):
@@ -438,7 +438,7 @@ def expandEnergyLevelWidth(image,widthchange):
             #if y > 0:
                 #energy = energy + abs(color - image.getpixel((x,y-1))[1])
 
-            if y < width:
+            if y < height:
                  energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
     #print 'wubbalubba'
@@ -648,14 +648,14 @@ def expandEnergyLevelHeight(image,heightchange):
             #if x > 0: 
                 #energy = energy + abs(color - image.getpixel((x-1,y))[1])
                 
-            if x < height:
-                energy = energy + abs(color - image.getpixel((x,y+1))[1])
+            if x < width:
+                energy = energy + abs(color - image.getpixel((x+1,y))[1])
 
             #if y > 0:
                 #energy = energy + abs(color - image.getpixel((x,y-1))[1])
 
             if y < height:
-                 energy = energy + abs(color - image.getpixel((x+1,y))[1])
+                 energy = energy + abs(color - image.getpixel((x,y+1))[1])
             table[x][y] = energy
     #print 'wubbalubba'
     for a in range (height):
