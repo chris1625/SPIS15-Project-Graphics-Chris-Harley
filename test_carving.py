@@ -49,6 +49,7 @@ def shrinkEnergyLevelWidth(image,widthchange):
             if y == height-1:
                  energy = energy + abs(color - image.getpixel((x,y-1))[1])
             table[x][y] = energy
+    
     #print 'wubbalubba'
     for a in range (height-1):
         for b in range (width):
@@ -82,20 +83,19 @@ def shrinkEnergyLevelWidth(image,widthchange):
        # if min(table[c][height-1],table[c+1][height - 1]) == minimum:
            #  endLocation = c
     for u in range (widthchange):
-        minimum = 99999999
+        minimum = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
         for c in range (width):
             mintester = table[c][height-1]
             minimum = min(minimum,mintester)
             if table[c][height-1] == minimum:
                 endLocation = c
-            print minimum
-        print minimum, table[0][height-1]
-        table[endLocation][height-1] = 999999
+        table[endLocation][height-1] = 9999999999999999999
         patherX = endLocation
         patherY = height - 1
+        print minimum, table[200][200] 
         for q in range (height-1,0,-1):
             patherX,patherY = pathwaytable[patherX][q][0],q
-            table[patherX][patherY] = 999999
+            table[patherX][patherY] = 9999999999999999999
         print endLocation
         while endY != 0:
             image.putpixel((endLocation,endY),(255,0,0))
@@ -212,8 +212,9 @@ def shrinkEnergyLevelWidth(image,widthchange):
         image.putpixel((endLocation,endY),(255,0,0))
         for a in range (height-1):
                 for b in range (width):
-                    if table[b][a] == 999999:
+                    if table[b][a] == 9999999999999999999:
                         break
+                    
                     john = table [b][a+1]
                     if a != height - 1:
                         if b != 0 and b!= width - 1:
@@ -255,4 +256,5 @@ def shrinkEnergyLevelWidth(image,widthchange):
                 if e2 < width - widthchange -1:
                     e2+=1
     image.show()
+    finalimage.show()
 
