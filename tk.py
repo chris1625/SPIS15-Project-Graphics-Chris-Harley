@@ -57,7 +57,7 @@ def expandCarve(image,width,height):
 def fullPath_callback(content,*args):
     pic=Image.open(fullPath)
     (sWidth,sHeight)=pic.size
-    size=(150,150)
+    size=(250,250)
     pic.thumbnail(size, Image.ANTIALIAS)
     (width,height)=pic.size
     canvas.config(width=width,height=height)
@@ -88,7 +88,7 @@ location=ttk.Label(content,textvariable=content.locationPath,foreground='blue')
 content.locationPath.trace(mode='w',callback=fullPath_callback)
 location.grid(column=1,row=4,sticky=(W,E,S,N))
 canvas=Canvas(content,width=0,height=0)
-canvas.grid(column=1,columnspan=2,row=5,sticky=(W,E))
+canvas.grid(column=1,columnspan=2,row=5,sticky=(W,E,N,S))
 dimensions=ttk.Label(content,textvariable=content.sourceSize,foreground='red').grid(column=2,row=5,sticky=(W))
 textlbl2=ttk.Label(content,text="Please select an option and a width/height:").grid(column=1,row=6,sticky=(W,E))
 
