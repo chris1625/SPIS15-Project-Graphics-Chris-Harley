@@ -3,6 +3,7 @@ import tkFileDialog
 import ttk
 from PIL import Image,ImageTk
 from seamCarving import *
+import subprocess as sp
 
 fileOnly=''
 fullPath=''
@@ -19,19 +20,26 @@ def getFileName():
     location.config(text=fileOnly)
 
 def seamCarve(*args):
-    width=int(inputWidth.get())
-    height=int(inputHeight.get())
+    tmp = sp.call('clear',shell=True)
+    if inputWidth.get()=='':
+        width=0
+    elif inputHeight.get()=='':
+        height=0
+    else:
+        width=int(inputWidth.get())
+        height=int(inputHeight.get())
     choice=str(option.get())
     if choice=='shrink':
         shrinkEnergyLevelWidth(fullPath,width)
         shrinkEnergyLevelHeight('output.bmp',height)
-        return
     elif choice=='expand':
         expandEnergyLevelWidth(fullPath,width)
         expandEnergyLevelHeight('output.bmp',height)
-        return
     else:
         print 'Please choose an option!'
+        return
+    print 'Process Complete!!!!'
+    print '***Refer to output.bmp, as well as seamsH.jpg and seamsW.jpg for seams'
 
 def expandCarve(image,width,height):
     print 'Will expand'
