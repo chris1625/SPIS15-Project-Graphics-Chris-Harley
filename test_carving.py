@@ -36,18 +36,14 @@ def shrinkEnergyLevelWidth(image,widthchange):
             color = image.getpixel((x,y))[1] 
             #if x > 0: 
                 #energy = energy + abs(color - image.getpixel((x-1,y))[1])
-                
-            if x < width-1:
-                energy = energy + abs(color - image.getpixel((x+1,y))[1])
-            if x == width-1:
+            if x == width - 1 and y == height - 1:
+               energy = energy + (abs(color - image.getpixel((x-1,y))[1]) + abs(color - image.getpixel((x,y-1))[1]))/2 
+            elif x < width-1 and y<height-1:
+               energy + (abs(color - image.getpixel((x+1,y))[1]) + abs(color - image.getpixel((x,y+1))[1]))/2 
+            elif x == width-1:
                 energy = energy + abs(color - image.getpixel((x-1,y))[1])
-            #if y > 0:
-                #energy = energy + abs(color - image.getpixel((x,y-1))[1])
-
-            if y < height-1:
-                 energy = energy + abs(color - image.getpixel((x,y+1))[1])
-            if y == height-1:
-                 energy = energy + abs(color - image.getpixel((x,y-1))[1])
+            else:
+                energy = energy + abs(color - image.getpixel((x,y-1))[1])
             table[x][y] = energy
     
     #print 'wubbalubba'
@@ -257,4 +253,5 @@ def shrinkEnergyLevelWidth(image,widthchange):
                     e2+=1
     image.show()
     finalimage.show()
+
 
