@@ -16,6 +16,13 @@ program. As of now, it is quite buggy and will not produce a perfect
 result. Output of the program can be found in the directory as output.bmp.
 You can view the seams in the image in seamsH.jpg and seamsW.jpg as well.
 
+Some examples:
+Shrinking:
+![Example 1](/example1.jpg)
+
+Expanding:
+![Example 2](example2.jpg)
+
 We are currently working on a better version of this program, which will
 produce better results. Consult test_carving.py for updates on that 
 progress.
